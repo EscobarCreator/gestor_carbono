@@ -5,6 +5,7 @@ Sprint: 1
 """
 
 import pytest       #Herramienta para hacer pruebas automáticas
+from modelos.empresa import Empresa         #Clase de Miguel (por probarse)
 from modelos.departamento import Departamento       #Clase de Miguel (por probarse) 
 from modelos.actividad import ConsumoEnergetico     #Clase de Ian (por probarse)
 
@@ -21,4 +22,9 @@ def test_departamento_sin_nombre_falla():
 def test_consumo_energetico_calcula():
     c = ConsumoEnergetico("Luz", 100)
     assert c.calcular_emisiones() == pytest.approx(44)
+
+#Prueba 4: Se crea una empresa con nombre, guarda el nombre
+def test_empresa_se_crea_con_nombre():
+    assert Empresa("EcoMex S.A.").nombre == "EcoMex S.A." #Corroborar si "nombre" es con "." o "_"
     
+
