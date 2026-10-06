@@ -27,4 +27,11 @@ def test_consumo_energetico_calcula():
 def test_empresa_se_crea_con_nombre():
     assert Empresa("EcoMex S.A.").nombre == "EcoMex S.A." #Corroborar si "nombre" es con "." o "_"
     
+#Prueba 5: Error al agregar 2 departamentos con el mismo nombre
+def test_empresa_no_repite_departamento():
+    empresa = Empresa("EcoMex S.A.")
+    empresa.agregar_departamento(Departamento("Ventas"))
+    with pytest.raises(ValueError): 
+        empresa.agregar_departamento(Departamento("Ventas"))
+        
 
