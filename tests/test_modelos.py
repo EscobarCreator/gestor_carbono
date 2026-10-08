@@ -7,7 +7,7 @@ Sprint: 1
 import pytest       #Herramienta para hacer pruebas automáticas
 from modelos.empresa import Empresa         #Clase de Miguel (por probarse)
 from modelos.departamento import Departamento       #Clase de Miguel (por probarse) 
-from modelos.actividad import ConsumoEnergetico     #Clase de Ian (por probarse)
+from modelos.actividad import Actividad, ConsumoEnergetico, Transporte, Residuo    #Clase de Ian (por probarse)
 
 #Prueba 1: Crear un departamento con su nombre
 def test_departamento_guarda_nombre():  
@@ -39,7 +39,27 @@ def test_departamento_guarda_actividades():
     ventas = Departamento("Ventas")
     ventas.agregar_actividad(ConsumoEnergetico("Luz", 100))
     assert ventas.calcular_emisiones() == pytest.approx(44)
-    
+
+#Prueba 7: Validar que sean únicamente números positivos los consumos energéticos
+def test_cantidad_negativa_falla():
+    with pytest.raises(ValueError): 
+        ConsumoEnergetico("Luz", -5)
+
+#Prueba 8: Validar que "actividad" corresponda a "luz, transporte o residuo"
+def test_actividad_directa_falla():
+    with pytest.raises(TypeError): 
+        Actividad("x", 1)
+
+#Prueba 9: 50L de gasolina x 2.31 debe dar 115kg de Co2
+def test_transporte_calcula():
+    t = Transporte("Reparto", 50, "gasolina")
+    assert t.calcular_emisiones() == pytest.approx(115)
+
+#Prueba 10: 200kg de residuo x 0.5 = 100kg de Co2
+def test_residuo_calcula():
+    r = Residuo("Basura", 200, "relleno")
+    assert r.calcular_emisiones() == pytest.approx(100)
+
 
 
 
