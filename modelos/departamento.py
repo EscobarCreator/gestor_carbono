@@ -1,7 +1,7 @@
 """Clase Departamento: contiene actividades y suma sus emisiones.
 
 Responsable: Miguel
-Sprint: 1
+Sprint: 2
 """
 
 from modelos.actividad import Actividad
@@ -9,7 +9,8 @@ from modelos.actividad import Actividad
 
 class Departamento:
     def __init__(self, nombre):
-        if not nombre or not nombre.strip():
+        # El nombre tiene que ser texto y no puede estar vacío
+        if not isinstance(nombre, str) or not nombre.strip():
             raise ValueError("El departamento necesita un nombre")
 
         self._nombre = nombre.strip()
@@ -21,8 +22,9 @@ class Departamento:
 
     @property
     def actividades(self):
-        return self._actividades
-      
+        # Regresa una copia para que la lista no se cambie desde afuera
+        return list(self._actividades)
+
     def agregar_actividad(self, actividad):
         if not isinstance(actividad, Actividad):
             raise TypeError("La actividad debe ser una instancia de Actividad")
@@ -37,9 +39,3 @@ class Departamento:
 
         return total
 
-
-if __name__ == "__main__":
-    d = Departamento("Ventas")
-    print(d.nombre)
-
-    Departamento("")
