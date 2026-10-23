@@ -1,7 +1,7 @@
 """Clase Empresa: contiene departamentos y suma sus emisiones.
 
 Responsable: Miguel
-Sprint: 1
+Sprint: 2
 """
 
 from modelos.departamento import Departamento
@@ -9,8 +9,15 @@ from modelos.departamento import Departamento
 
 class Empresa:
     def __init__(self, nombre, rfc=None):
-        if not nombre or not nombre.strip():
+        # El nombre tiene que ser texto y no puede estar vacío
+        if not isinstance(nombre, str) or not nombre.strip():
             raise ValueError("La empresa necesita un nombre")
+
+        # El RFC es opcional, pero si se da debe tener 12 o 13 caracteres
+        if rfc is not None:
+            rfc = str(rfc).strip().upper()
+            if len(rfc) != 12 and len(rfc) != 13:
+                raise ValueError("El RFC debe tener 12 o 13 caracteres")
 
         self._nombre = nombre.strip()
         self._rfc = rfc
@@ -26,7 +33,8 @@ class Empresa:
 
     @property
     def departamentos(self):
-        return self._departamentos
+        # Regresa una copia para que la lista no se cambie desde afuera
+        return list(self._departamentos)
 
     def agregar_departamento(self, departamento):
         if not isinstance(departamento, Departamento):
@@ -52,13 +60,3 @@ class Empresa:
 
         return total
 
-
-if __name__ == "__main__":
-    empresa = Empresa("Empresa Ejemplo", "ABC123456XYZ")
-
-    ventas = Departamento("Ventas")
-    empresa.agregar_departamento(ventas)
-
-    print(empresa.nombre)
-    print(empresa.buscar_departamento("Ventas").nombre)
-    print(empresa.calcular_emisiones_total())
