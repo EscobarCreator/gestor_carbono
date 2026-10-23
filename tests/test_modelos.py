@@ -18,10 +18,10 @@ def test_departamento_sin_nombre_falla():
     with pytest.raises(ValueError):     #Lanza el error por departamento sin nombre
         Departamento("")
 
-#Prueba 3: 100 kWh x 0.44 debe dar 44kg de Co2
+#Prueba 3: 100 kWh x 0.444 debe dar 44.4kg de Co2
 def test_consumo_energetico_calcula():
     c = ConsumoEnergetico("Luz", 100)
-    assert c.calcular_emisiones() == pytest.approx(44)
+    assert c.calcular_emisiones() == pytest.approx(44.4)
 
 #Prueba 4: Se crea una empresa con nombre, guarda el nombre
 def test_empresa_se_crea_con_nombre():
@@ -38,7 +38,7 @@ def test_empresa_no_repite_departamento():
 def test_departamento_guarda_actividades():
     ventas = Departamento("Ventas")
     ventas.agregar_actividad(ConsumoEnergetico("Luz", 100))
-    assert ventas.calcular_emisiones() == pytest.approx(44)
+    assert ventas.calcular_emisiones() == pytest.approx(44.4)
 
 #Prueba 7: Validar que sean únicamente números positivos los consumos energéticos
 def test_cantidad_negativa_falla():
@@ -50,15 +50,15 @@ def test_actividad_directa_falla():
     with pytest.raises(TypeError): 
         Actividad("x", 1)
 
-#Prueba 9: 50L de gasolina x 2.31 debe dar 115kg de Co2
+#Prueba 9: 50L de gasolina x 2.32 debe dar 116kg de Co2
 def test_transporte_calcula():
     t = Transporte("Reparto", 50, "gasolina")
-    assert t.calcular_emisiones() == pytest.approx(115)
+    assert t.calcular_emisiones() == pytest.approx(116)
 
-#Prueba 10: 200kg de residuo x 0.5 = 100kg de Co2
+#Prueba 10: 200kg de residuo x 0.64 = 128kg de Co2
 def test_residuo_calcula():
     r = Residuo("Basura", 200, "relleno")
-    assert r.calcular_emisiones() == pytest.approx(100)
+    assert r.calcular_emisiones() == pytest.approx(128)
 
 
 
